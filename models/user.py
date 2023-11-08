@@ -9,10 +9,10 @@ class User(BaseModel):
     """
     The user class inherits its properties from BaseModel
     """
-    Email = ""
+    email = ""
     password = ""
-    FirstName = ""
-    LastName = ""
+    First_name = ""
+    Last_name = ""
 
     def __init__(self arg, **kargs)
     """
