@@ -1,5 +1,6 @@
 from datetime import datetime
 import unittest
+from uuid import uuid4
 
 from models.base_model import BaseModel
 
@@ -53,6 +54,46 @@ class TestBaseModel(unittest.TestCase):
                 "id": base_1.id,
                 "updated_at": datetime.isoformat(base_1.updated_at),
                 "created_at": datetime.isoformat(base_1.created_at),
+                "__class__": "BaseModel",
+            },
+        )
+
+    def test_base_model_from_dict(self):
+        base_1 = BaseModel()
+        base_1.save()
+
+        base_2 = BaseModel(**base_1.to_dict())
+
+        self.assertEqual(
+            base_2.to_dict(),
+            {
+                "id": base_1.id,
+                "updated_at": datetime.isoformat(base_1.updated_at),
+                "created_at": datetime.isoformat(base_1.created_at),
+                "__class__": "BaseModel",
+            },
+        )
+
+    def test_base_model_from_dict_is_new(self):
+        base_1 = BaseModel()
+        base_1.save()
+
+        base_2 = BaseModel(**base_1.to_dict())
+
+        self.assertIsNot(
+            base_1,
+            base_2
+        )
+
+    def test_base_model_from_dict_incomplete_keys(self):
+        base_2 = BaseModel(id=uuid4())
+
+        self.assertEqual(
+            base_2.to_dict(),
+            {
+                "id": base_2.id,
+                "updated_at": datetime.isoformat(base_2.updated_at),
+                "created_at": datetime.isoformat(base_2.created_at),
                 "__class__": "BaseModel",
             },
         )
