@@ -1,12 +1,11 @@
 #!/usr/bin/python3
 import cmd
-from models.base_model import BaseModel
+from config import ACCEPTED_CLASSES
 from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb)"
-    ACCEPTED_CLASSES = {BaseModel.__name__: BaseModel}
 
     def emptyline(self):
         return
@@ -23,14 +22,14 @@ class HBNBCommand(cmd.Cmd):
         if len(argv) != 1:
             print("** class name missing **")
             return
-        if argv[0] not in self.ACCEPTED_CLASSES.keys():
+        if argv[0] not in ACCEPTED_CLASSES.keys():
             print("** class doesn't exist **")
             return
 
         cls_name = argv[0]
         new_model = None
-        if cls_name == "BaseModel":
-            new_model = BaseModel()
+        if cls_name in list(ACCEPTED_CLASSES.keys()):
+            new_model = ACCEPTED_CLASSES[cls_name]()
         if new_model:
             new_model.save()
             print(new_model.id)
@@ -41,7 +40,7 @@ class HBNBCommand(cmd.Cmd):
         if argc < 1:
             print("** class name missing **")
             return
-        if argv[0] not in self.ACCEPTED_CLASSES.keys():
+        if argv[0] not in ACCEPTED_CLASSES.keys():
             print("** class doesn't exist **")
             return
         if argc < 2:
@@ -55,12 +54,31 @@ class HBNBCommand(cmd.Cmd):
             return
 
     def do_destory(self, args):
-        pass
+        argv = args.split()
+        argc = len(argv)
+        if argc < 1:
+            print("** class name missing **")
+            return
+        if argv[0] not in ACCEPTED_CLASSES.keys():
+            print("** class doesn't exist **")
+            return
+        class_name = argv[0]
+        if argc < 2:
+            print("** instance id missing **")
+            return
+        id = argv[1]
+        try:
+            del storage.all()["{}.{}".format(class_name, id)]
+            storage.save()
+        except KeyError:
+            print("** no instance found **")
+
+        return
 
     def do_all(self, args):
         argv = args.split()
         argc = len(argv)
-        if argc > 0 and argv[0] not in self.ACCEPTED_CLASSES.keys():
+        if argc > 0 and argv[0] not in ACCEPTED_CLASSES.keys():
             print("** class doesn't exist **")
             return
         if argc == 0:
@@ -80,7 +98,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         class_name = argv[0]
-        if class_name not in self.ACCEPTED_CLASSES.keys():
+        if class_name not in ACCEPTED_CLASSES.keys():
             print("** class doesn't exist **")
             return
         if argc < 2:
