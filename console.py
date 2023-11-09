@@ -53,6 +53,7 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
             return
 
+<<<<<<< HEAD
     def do_destory(self, args):
         argv = args.split()
         argc = len(argv)
@@ -74,6 +75,10 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
         return
+=======
+    def do_destroy(self, args):
+        pass
+>>>>>>> refs/remotes/origin/master
 
     def do_all(self, args):
         argv = args.split()
