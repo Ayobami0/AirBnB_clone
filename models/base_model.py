@@ -19,9 +19,9 @@ class BaseModel:
         if args and len(args) != 0:
             pass
         if kwargs and len(kwargs) != 0:
-            self.id = kwargs.get("id", str(uuid.uuid4()))
-            created_at = kwargs.get("created_at", datetime.datetime.now())
-            updated_at = kwargs.get("updated_at", created_at)
+            self.id = kwargs.get("id")
+            created_at = kwargs.get("created_at")
+            updated_at = kwargs.get("updated_at")
             self.created_at = (
                 created_at
                 if not isinstance(created_at, str)
@@ -35,7 +35,7 @@ class BaseModel:
             return
         self.id = str(uuid.uuid4())
         self.created_at = datetime.datetime.now()
-        self.updated_at = self.created_at
+        self.updated_at = datetime.datetime.now()
         storage.new(self)
 
     def __str__(self) -> str:

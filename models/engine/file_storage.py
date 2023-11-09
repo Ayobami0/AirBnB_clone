@@ -53,3 +53,8 @@ class FileStorage:
                 self.__objects = {k: BaseModel(v) for k, v in objects.items()}
         except Exception:
             return
+
+    def update(self, updated_obj):
+        self.__objects[
+            "{}{}".format(updated_obj.__class__.__name__, updated_obj.id)
+        ] = updated_obj
