@@ -5,7 +5,7 @@ The review inherits its properties from BaseModel
 from models.base_model import BaseModel
 
 
-class state(BaseModel):
+class State(BaseModel):
     """
     The classs for the state
     """

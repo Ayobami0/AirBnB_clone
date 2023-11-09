@@ -54,7 +54,7 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
             return
 
-    def do_destory(self, args):
+    def do_destroy(self, args):
         pass
 
     def do_all(self, args):
