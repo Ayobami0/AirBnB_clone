@@ -50,7 +50,9 @@ class FileStorage:
             with open(self.__file_path, "r", encoding="utf-8") as jf_p:
                 objects = json.load(jf_p)
                 BaseModel = import_module("models.base_model").BaseModel
-                self.__objects = {k: BaseModel(v) for k, v in objects.items()}
+                self.__objects = {
+                    k: BaseModel(**v) for k, v in objects.items()
+                }
         except Exception:
             return
 

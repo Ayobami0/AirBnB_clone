@@ -14,8 +14,8 @@ class User(BaseModel):
     First_name = ""
     Last_name = ""
 
-    def __init__(self arg, **kargs)
-    """
-    The init function for user
-    """
-    super().__init__(*arg, **kwargs)
+    def __init__(self, *arg, **kwargs):
+        """
+        The init function for user
+        """
+        super().__init__(*arg, **kwargs)

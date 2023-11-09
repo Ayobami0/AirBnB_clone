@@ -48,7 +48,7 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
         id = argv[1]
-        saved_model = storage.all().get(class_name + "." + id)
+        saved_model = storage.all().get(argv[1] + "." + id)
 
         if not saved_model:
             print("** no instance found **")
@@ -60,17 +60,17 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, args):
         argv = args.split()
         argc = len(argv)
-        if argc < 1:
-            print("** class name missing **")
-            return
-        if argv[0] not in self.ACCEPTED_CLASSES.keys():
+        if argc > 0 and argv[0] not in self.ACCEPTED_CLASSES.keys():
             print("** class doesn't exist **")
             return
-        saved_models = [
-            str(model)
-            for model in storage.all().values()
-            if model.__class__.__name__ == argv[0]
-        ]
+        if argc == 0:
+            saved_models = [str(model) for model in storage.all().values()]
+        else:
+            saved_models = [
+                str(model)
+                for model in storage.all().values()
+                if model.__class__.__name__ == argv[0]
+            ]
         print(saved_models)
 
     def do_update(self, args):
@@ -102,8 +102,6 @@ class HBNBCommand(cmd.Cmd):
 
         setattr(saved_model, attr_name, attr_value)
         saved_model.save()
-
-        storage.update(saved_model)
 
 
 if __name__ == "__main__":
