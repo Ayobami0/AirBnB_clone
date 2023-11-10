@@ -1,8 +1,11 @@
 #!/usr/bin/python3
+"""The file storage module."""
 import json
 
 
 class FileStorage:
+    """Handles the serialization and deserialization of stored models.
+    """
     __file_path = "file.json"
     __objects = {}
 

@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Contains the BaseModel from which all the other classes inherit from."""
 import uuid
 import datetime
 import models

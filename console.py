@@ -1,10 +1,14 @@
 #!/usr/bin/python3
+"""Console module for the command line app."""
 import cmd
 from models import storage
 import config
 
 
 class HBNBCommand(cmd.Cmd):
+    """
+    The AirBNB clone cli entry point.
+    """
     prompt = "(hbnb)"
 
     def emptyline(self):
@@ -15,9 +19,12 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_EOF(self, _):
+        """Quit command to exit the program"""
         return True
 
     def do_create(self, args):
+        """Creates a new class.\nUsage:
+        create <class_name>"""
         argv = args.split()
         if len(argv) != 1:
             print("** class name missing **")
@@ -35,6 +42,8 @@ class HBNBCommand(cmd.Cmd):
             print(new_model.id)
 
     def do_show(self, args):
+        """Prints out a stored class.\nUsage:
+        show <class_name>"""
         argv = args.split()
         argc = len(argv)
         if argc < 1:
@@ -57,6 +66,8 @@ class HBNBCommand(cmd.Cmd):
         print(saved_model)
 
     def do_destroy(self, args):
+        """Deletes an existing class.\nUsage:
+        destroy <class_name> [existing_object_id]"""
         argv = args.split()
         argc = len(argv)
         if argc < 1:
@@ -79,6 +90,9 @@ class HBNBCommand(cmd.Cmd):
         return
 
     def do_all(self, args):
+        """Prints out all stored class.\nUsage:
+        all
+        all <class_name>"""
         argv = args.split()
         argc = len(argv)
         if argc > 0 and argv[0] not in config.ACCEPTED_CLASSES.keys():
@@ -95,6 +109,8 @@ class HBNBCommand(cmd.Cmd):
         print(saved_models)
 
     def do_update(self, args: str):
+        """Updates a stored class with new attributes.\nUsage:
+        update <class_name> <existing_id> <argument_name> <argument_value>"""
         argv = args.split(maxsplit=3)
         argc = len(argv)
         if argc < 1:
