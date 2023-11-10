@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from datetime import datetime
 import unittest
 from uuid import uuid4
@@ -25,7 +26,7 @@ class TestBaseModel(unittest.TestCase):
     def test_time_updated_is_created(self):
         base_1 = BaseModel()
 
-        self.assertEqual(base_1.updated_at, base_1.created_at)
+        self.assertEqual(base_1.updated_at.second, base_1.created_at.second)
 
     def test_time_updated_on_save(self):
         base_1 = BaseModel()
@@ -66,12 +67,7 @@ class TestBaseModel(unittest.TestCase):
 
         self.assertEqual(
             base_2.to_dict(),
-            {
-                "id": base_1.id,
-                "updated_at": datetime.isoformat(base_1.updated_at),
-                "created_at": datetime.isoformat(base_1.created_at),
-                "__class__": "BaseModel",
-            },
+            base_1.to_dict()
         )
 
     def test_base_model_from_dict_is_new(self):

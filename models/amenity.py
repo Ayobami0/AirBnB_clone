@@ -2,10 +2,10 @@
 """
 This module inherits from Basemodel
 """
-from models.base_model import baseModel
+from models.base_model import BaseModel
 
 
-class Amenity(Basemodel):
+class Amenity(BaseModel):
     """
     This Amenity class inherits from BaseModel
     """

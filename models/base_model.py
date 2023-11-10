@@ -1,7 +1,8 @@
 #!/usr/bin/python3
+"""Contains the BaseModel from which all the other classes inherit from."""
 import uuid
 import datetime
-from models import storage
+import models
 
 
 class BaseModel:
@@ -19,24 +20,26 @@ class BaseModel:
         if args and len(args) != 0:
             pass
         if kwargs and len(kwargs) != 0:
-            self.id = kwargs.get("id")
-            created_at = kwargs.get("created_at")
-            updated_at = kwargs.get("updated_at")
-            self.created_at = (
-                created_at
-                if not isinstance(created_at, str)
-                else datetime.datetime.fromisoformat(created_at)
-            )
-            self.updated_at = (
-                updated_at
-                if not isinstance(updated_at, str)
-                else datetime.datetime.fromisoformat(updated_at)
-            )
+            # this for loop is mainly to cater for cases where insurficient
+            # parameters was provided in the dict. Only the id, created_at,
+            # and updated_at attributes are set. It can be removed later on.
+            for k in ["created_at", "updated_at", "id"]:
+                if k not in kwargs.keys():
+                    if k == "id":
+                        setattr(self, k, str(uuid.uuid4()))
+                    else:
+                        setattr(self, k, datetime.datetime.now())
+            for k, v in kwargs.items():
+                if k != "__class__":
+                    if k in ["created_at", "updated_at"]:
+                        setattr(self, k, datetime.datetime.fromisoformat(v))
+                    else:
+                        setattr(self, k, v)
             return
         self.id = str(uuid.uuid4())
         self.created_at = datetime.datetime.now()
         self.updated_at = datetime.datetime.now()
-        storage.new(self)
+        models.storage.new(self)
 
     def __str__(self) -> str:
         """
@@ -62,7 +65,7 @@ class BaseModel:
         Update the 'updated_at' timestamp to the current time.
         """
         self.updated_at = datetime.datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         """
