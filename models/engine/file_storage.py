@@ -50,6 +50,5 @@ class FileStorage:
                     k: ACCEPTED_CLASSES["{}".format(v.get("__class__"))](**v)
                     for k, v in objects.items()
                 }
-        except Exception as e:
-            print(e)
+        except Exception:
             return
