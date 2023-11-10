@@ -47,8 +47,9 @@ class FileStorage:
             with open(self.__file_path, "r", encoding="utf-8") as jf_p:
                 objects = json.load(jf_p)
                 self.__objects = {
-                    k: ACCEPTED_CLASSES["{}".format(v.get("__class__"))]
+                    k: ACCEPTED_CLASSES["{}".format(v.get("__class__"))](**v)
                     for k, v in objects.items()
                 }
-        except Exception:
+        except Exception as e:
+            print(e)
             return
