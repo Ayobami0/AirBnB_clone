@@ -34,7 +34,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        cls_name = argv[0]
+        cls_name = argv[0].strip('"')
         new_model = None
         if cls_name in list(config.ACCEPTED_CLASSES.keys()):
             new_model = config.ACCEPTED_CLASSES[cls_name]()
@@ -50,19 +50,21 @@ class HBNBCommand(cmd.Cmd):
         if argc < 1:
             print("** class name missing **")
             return
-        cls_name = argv[0]
+        cls_name = argv[0].strip('"')
         if cls_name not in config.ACCEPTED_CLASSES.keys():
             print("** class doesn't exist **")
             return
         if argc < 2:
             print("** instance id missing **")
             return
-        id = argv[1]
+        id = argv[1].strip('"')
         saved_model = storage.all().get("{}.{}".format(cls_name, id))
 
         if not saved_model:
             print("** no instance found **")
             return
+
+        print(saved_model)
 
     def do_destroy(self, args):
         """Deletes an existing class.\nUsage:
@@ -75,11 +77,11 @@ class HBNBCommand(cmd.Cmd):
         if argv[0] not in config.ACCEPTED_CLASSES.keys():
             print("** class doesn't exist **")
             return
-        cls_name = argv[0]
+        cls_name = argv[0].strip('"')
         if argc < 2:
             print("** instance id missing **")
             return
-        id = argv[1]
+        id = argv[1].strip('"')
         try:
             del storage.all()["{}.{}".format(cls_name, id)]
             storage.save()
@@ -103,7 +105,7 @@ class HBNBCommand(cmd.Cmd):
             saved_models = [
                 str(model)
                 for model in storage.all().values()
-                if model.__class__.__name__ == argv[0]
+                if model.__class__.__name__ == argv[0].strip('"')
             ]
         print(saved_models)
 
@@ -115,14 +117,14 @@ class HBNBCommand(cmd.Cmd):
         if argc < 1:
             print("** class name missing **")
             return
-        cls_name = argv[0]
+        cls_name = argv[0].strip('"')
         if cls_name not in config.ACCEPTED_CLASSES.keys():
             print("** class doesn't exist **")
             return
         if argc < 2:
             print("** instance id missing **")
             return
-        id = argv[1]
+        id = argv[1].strip('"')
         saved_model = storage.all().get(cls_name + "." + id)
         if not saved_model:
             print("** no instance found **")
@@ -133,7 +135,7 @@ class HBNBCommand(cmd.Cmd):
         if argc < 4:
             print("** value missing **")
             return
-        attr_name = argv[2]
+        attr_name = argv[2].strip('"').strip("'")
         attr_value = argv[3].strip('"')
 
         setattr(saved_model, attr_name, attr_value)
@@ -190,7 +192,7 @@ class HBNBCommand(cmd.Cmd):
 
         else:
             parameters = _cmd_args[1].strip(")")
-            arg_str = "{} {}".format(_cmd_name, parameters)
+            arg_str = "{} {}".format(_cmd_name, parameters.strip('"'))
             _accepted_cmds[_cmd_args[0]](arg_str)
 
     def count(self, line):
