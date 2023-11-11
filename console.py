@@ -64,6 +64,10 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
             return
 
+<<<<<<< HEAD
+    def do_destroy(self, args):
+        pass
+=======
         print(saved_model)
 
     def do_destroy(self, args):
@@ -89,6 +93,7 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
         return
+>>>>>>> 1fb53ec83f4fb381383649fde7fd010fd34af9f5
 
     def do_all(self, args):
         """Prints out all stored class.\nUsage:
