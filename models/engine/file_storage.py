@@ -1,18 +1,6 @@
 #!/usr/bin/python3
 """The file storage module."""
 import json
-<<<<<<< HEAD
-from importlib import import_module
-import models
-from models.base_model import BaseModel
-from models.city import City
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
-from models.state import State
-from models.user import User
-=======
->>>>>>> 1fb53ec83f4fb381383649fde7fd010fd34af9f5
 
 
 class FileStorage:
