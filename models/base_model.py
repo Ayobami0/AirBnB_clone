@@ -23,12 +23,12 @@ class BaseModel:
             # this for loop is mainly to cater for cases where insurficient
             # parameters was provided in the dict. Only the id, created_at,
             # and updated_at attributes are set. It can be removed later on.
-            # for k in ["created_at", "updated_at", "id"]:
-            #     if k not in kwargs.keys():
-            #         if k == "id":
-            #             setattr(self, k, str(uuid.uuid4()))
-            #         else:
-            #             setattr(self, k, datetime.datetime.now())
+            for k in ["created_at", "updated_at", "id"]:
+                if k not in kwargs.keys():
+                    if k == "id":
+                        setattr(self, k, str(uuid.uuid4()))
+                    else:
+                        setattr(self, k, datetime.datetime.now())
             for k, v in kwargs.items():
                 if k != "__class__":
                     if k in ["created_at", "updated_at"]:
