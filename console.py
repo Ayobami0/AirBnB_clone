@@ -140,6 +140,19 @@ class HBNBCommand(cmd.Cmd):
         saved_model.save()
 
     def default(self, line):
+        """
+        Handle commands not recognized as predefined commands.
+
+        Args:
+            line (str): The input line containing the command.
+
+        Notes:
+            This method attempts to parse and execute custom commands
+                based on the input line.
+
+        Example:
+            BaseModel.show(123)
+        """
         if not line.strip().startswith(tuple(config.ACCEPTED_CLASSES.keys())):
             return super().default(line)
         _cmd = line.split(".")
@@ -181,6 +194,15 @@ class HBNBCommand(cmd.Cmd):
             _accepted_cmds[_cmd_args[0]](arg_str)
 
     def count(self, line):
+        """
+        Count the number of instances based on the class name.
+
+        Args:
+            line (str): The input line containing the class name.
+
+        Example:
+            count BaseModel
+        """
         print(
             len(
                 [
