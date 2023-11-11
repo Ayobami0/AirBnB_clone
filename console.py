@@ -9,6 +9,7 @@ class HBNBCommand(cmd.Cmd):
     """
     The AirBNB clone cli entry point.
     """
+
     prompt = "(hbnb)"
 
     def emptyline(self):
@@ -135,10 +136,64 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
             return
         attr_name = argv[2]
-        attr_value = argv[3].strip("\"")
+        attr_value = argv[3].strip('"')
 
         setattr(saved_model, attr_name, attr_value)
         saved_model.save()
+
+    def default(self, line):
+        if not line.strip().startswith(tuple(config.ACCEPTED_CLASSES.keys())):
+            return super().default(line)
+        _cmd = line.split(".")
+        _cmd_name = _cmd[0]
+        _cmd_method = _cmd[1]
+
+        _accepted_cmds = {
+            "all": self.do_all,
+            "count": self.count,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            "update": self.do_update,
+        }
+        _cmd_args = _cmd_method.split("(")
+
+        if _cmd_args[0] not in _accepted_cmds:
+            return super().default(line)
+
+        if _cmd_method in list(_accepted_cmds.keys())[0:2]:
+            _accepted_cmds[_cmd_args[0]](_cmd_name)
+        elif _cmd_args[0].strip() == "update":
+            parameters = _cmd_args[1].strip(")").split(",")
+
+            if parameters[1].strip().startswith("{") and len(parameters) == 2:
+                arg_str = parameters[1].strip().strip("}").strip("{")
+                update_args = arg_str.split(":")
+                arg_str = "{} {} {}".format(
+                    _cmd_name,
+                    parameters[0],
+                    " ".join(update_args),
+                )
+            else:
+                arg_str = "{} {}".format(_cmd_name, " ".join(parameters))
+            _accepted_cmds[_cmd_args[0]](arg_str)
+
+        else:
+            parameters = _cmd_args[1].strip(")")
+            arg_str = "{} {}".format(_cmd_name, parameters)
+            _accepted_cmds[_cmd_args[0]](arg_str)
+
+    def count(self, line):
+        print(
+            len(
+                [
+                    k
+                    for k in storage.all().keys()
+                    if k.startswith(
+                        line.strip(),
+                    )
+                ],
+            ),
+        )
 
 
 if __name__ == "__main__":
