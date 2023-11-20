@@ -1,0 +1,124 @@
+.places {
+	margin: auto;
+}
+
+.places h1 {
+	text-align: left;
+}
+
+.places article {
+	float: left;
+	width: 390px;
+	padding: 20px;
+	margin: 20px;
+	border: #ff5a5f solid 1px;
+	border-radius: 4px;
+	text-align: center;
+}
+
+.places article h2 {
+	display: inline;
+	margin: auto;
+	margin-left: auto;
+	font-size: 30px;
+}
+
+.places article .price_by_night {
+	float: right;
+	color: #FF5A5F;
+	border: #FF5A5F solid 4px;
+	border-radius: 50%;
+	min-width: 60px;
+	height: 60px;
+	line-height: 60px;
+	font-size: 30px;
+	margin-bottom: 10px;
+}
+
+.information {
+	clear: right;
+	height: 80px;
+	border-top: #dddddd solid 1px;
+	border-bottom: #dddddd solid 1px;
+}
+
+.information div {
+	display: inline-block;
+	width: 100px;
+}
+
+.information .max_guest::before {
+	display: block;
+	content: url(../images/icon_group.png)
+}
+
+.information .number_rooms::before {
+	display: block;
+	content: url(../images/icon_bed.png)
+}
+
+.information .number_bathrooms::before {
+	display: block;
+	content: url(../images/icon_bath.png)
+}
+
+.places .user,
+.places .description {
+	text-align: left;
+	margin-top: 15px;
+}
+
+.places .description {
+	margin-bottom: 40px;
+}
+
+.user::before {
+	content: "Owner: ";
+	font-weight: bold;
+}
+
+.places article div.amenities,
+.places article div.reviews {
+	text-align: left;
+	list-style: none;
+}
+
+.places article div.amenities li,
+.places article div.reviews li{
+	padding-top: 5px;
+}
+
+.places article div.amenities li:nth-of-type(1)::before{
+	content: url(../images/icon_tv.png);
+}
+
+.places article div.amenities li:nth-of-type(2)::before{
+	content: url(../images/icon_wifi.png);
+}
+
+.places article div.amenities li:nth-of-type(3)::before{
+	content: url(../images/icon_pets.png);
+}
+
+.places article div.amenities h2,
+.places article div.reviews h2 {
+	display: block;
+	font-size: 16px;
+	border-bottom: #dddddd 1px solid;
+}
+
+.places div.amenities {
+	margin-bottom: 40px;
+}
+
+.places article div.reviews h3 {
+	font-size: 14px;
+}
+
+.places article div.reviews p {
+	font-size: 12px;
+}
+
+.places div.reviews {
+	margin-bottom: 40px;
+}
